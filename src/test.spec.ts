@@ -20,11 +20,11 @@ describe('something', () => {
   });
 
   it ('should return a function', () => {
-    expect(scheduleRetry(0, 200, 500)).to.be.a('function');
+    expect(scheduleRetry([0, 200, 500])).to.be.a('function');
   });
 
   it ('should return a function that returns and instance of an Observable', () => {
-    expect(scheduleRetry(0, 200, 500)(new Observable())).to.be.instanceof(Observable);
+    expect(scheduleRetry([0, 200, 500])(new Observable())).to.be.instanceof(Observable);
   });
 
   it ('should retry an observable as many times as there are args', () => {
@@ -32,7 +32,7 @@ describe('something', () => {
     const mock$ = mockSubject.asObservable();
     const subscribeSpy = spy(mock$, 'subscribe');
 
-    scheduleRetry(0, 500)(mock$).subscribe();
+    scheduleRetry([0, 500])(mock$).subscribe();
     mockSubject.error({});
     clock.tick(501);
     expect(subscribeSpy).to.have.been.calledThrice;
