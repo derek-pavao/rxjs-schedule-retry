@@ -8,7 +8,7 @@ import { Subject } from 'rxjs/Subject';
 
 use(sinonChai);
 
-describe('something', () => {
+describe('scheduleRetry()', () => {
   let clock: SinonFakeTimers;
 
   beforeEach(() => {
