@@ -1,5 +1,5 @@
 {
-  "name": "rxjs-schedule-retry",
+  "name": "@dotDeeka/rxjs-schedule-retry",
   "version": "0.1.0",
   "description": "",
   "main": "dist/index.js",
