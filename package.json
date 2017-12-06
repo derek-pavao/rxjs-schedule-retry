@@ -1,0 +1,22 @@
+{
+  "name": "rxjs-schedule-retry",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "test": "mocha --require ts-node/register --reporter dot src/**/*.spec.ts",
+    "build": "npm run clean && webpack"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/mocha": "^2.2.44",
+    "mocha": "^4.0.1",
+    "rimraf": "^2.6.2",
+    "ts-loader": "^3.2.0",
+    "typescript": "^2.6.2",
+    "webpack": "^3.10.0",
+    "webpack-devserver": "0.0.6"
+  }
+}
