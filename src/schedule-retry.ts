@@ -1,8 +1,13 @@
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
-export function scheduleRetry(timeouts: number[]) {
+interface ScheduleRetryFunc {
+    (...timeouts: number[]): Function;
+    (timeouts: number[]): Function;
+}
 
+export const scheduleRetry : ScheduleRetryFunc = function (...timeouts : any[]): Function {
+  timeouts = Array.isArray(timeouts[0]) ? timeouts[0] : timeouts;
   return function (source: Observable<any>) {
     let tryNumber = 0;
     return new Observable((observer) => sourceSubscribe(observer));
