@@ -22,6 +22,10 @@ describe('scheduleRetry()', () => {
   it ('should return a function', () => {
     expect(scheduleRetry(0, 200, 500)).to.be.a('function');
   });
+  
+  it ('should accept an array of numbers', () => {
+    expect(scheduleRetry([0, 200, 500])).to.not.throw;
+  });
 
   it ('should return a function that returns and instance of an Observable', () => {
     expect(scheduleRetry(0, 200, 500)(new Observable())).to.be.instanceof(Observable);
