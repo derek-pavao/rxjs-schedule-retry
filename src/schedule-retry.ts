@@ -16,7 +16,6 @@ export const scheduleRetry : ScheduleRetryFunc = function (...timeouts : any[]):
     });
 
     function sourceSubscribe(observer: Observer<any>): Subscription {
-
       return source.subscribe(
         (val) => observer.next(val),
         (err) => doSubscribe(observer, err),
@@ -26,8 +25,9 @@ export const scheduleRetry : ScheduleRetryFunc = function (...timeouts : any[]):
 
     function doSubscribe(observer: Observer<any>, err?: any) {
       const timeoutTime = timeouts[tryCount];
+
       if (typeof timeoutTime === 'undefined') {
-        // observer.error(new Error('Reached the end of the schedule and was not successful'));
+        observer.error(err);
         observer.complete();
       } else {
         tryCount++;

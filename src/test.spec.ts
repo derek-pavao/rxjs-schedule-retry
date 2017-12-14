@@ -36,12 +36,18 @@ describe('scheduleRetry()', () => {
   it ('should retry an observable as many times as there are args', () => {
     const mockSubject = new Subject();
     const mock$ = mockSubject.asObservable();
-    const subscribeSpy = spy(mock$, 'subscribe');
+    const nextSpy = spy();
+    const errorSpy = spy();
+    const completeSpy = spy();
 
-    scheduleRetry(0, 500)(mock$).subscribe();
+
+    mock$.let(scheduleRetry(0, 500))
+      .subscribe(nextSpy, errorSpy, completeSpy);
+
     mockSubject.error({});
     clock.tick(500);
-    expect(subscribeSpy).to.have.been.calledThrice;
+    expect(nextSpy).to.not.have.been.called;
+    expect(errorSpy).to.have.been.called;
   });
 
   it ('should not attach it self to Observable.prototype', () => {
@@ -63,6 +69,29 @@ describe('scheduleRetry()', () => {
 
     mockSubject.next(value);
     clock.tick(101);
+  });
+
+  it ('should call the error handler if it gets to the end of the retry schedule', () => {
+    const mockSubject = new Subject();
+    const err = {'err': 'something went wrong. Whoopsies!'};
+    const mock$ = mockSubject.asObservable();
+
+    mock$.let(scheduleRetry(0, 100))
+      .subscribe(() => {
+        console.log('next');
+      }, (err) => {
+        console.log('err', err);
+
+        expect(err).to.equal(err);
+      }, () => console.log('complete'));
+
+    mockSubject.error(err);
+    clock.tick(10);
+    mockSubject.error(err);
+    clock.tick(100);
+    mockSubject.error(err);
+    clock.tick(101);
+    mockSubject.error(err);
   });
 
 });
