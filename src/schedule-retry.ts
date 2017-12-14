@@ -1,35 +1,40 @@
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
+import { Subscription } from 'rxjs/Subscription';
 
 interface ScheduleRetryFunc {
-    (...timeouts: number[]): Function;
-    (timeouts: number[]): Function;
+    (...timeouts: number[]): (selector: Observable<any>) => Observable<any>
+    (timeouts: number[]): (selector: Observable<any>) => Observable<any>
 }
 
-export const scheduleRetry : ScheduleRetryFunc = function (...timeouts : any[]): Function {
+export const scheduleRetry : ScheduleRetryFunc = function (...timeouts : any[]): (selector: Observable<any>) => Observable<any> {
   timeouts = Array.isArray(timeouts[0]) ? timeouts[0] : timeouts;
   return function (source: Observable<any>) {
-    let tryNumber = 0;
-    return new Observable((observer) => sourceSubscribe(observer));
-    
-    function sourceSubscribe(observer: Observer<any>) {
-      source.subscribe(
+    let tryCount = 0;
+    return new Observable((observer) => {
+      return sourceSubscribe(observer);
+    });
+
+    function sourceSubscribe(observer: Observer<any>): Subscription {
+
+      return source.subscribe(
         (val) => observer.next(val),
-        (err) => doSubscribe(observer),
+        (err) => doSubscribe(observer, err),
         () => observer.complete()
       );
     }
 
-    function doSubscribe(observer: Observer<any>) {
-      const timeoutTime = timeouts[tryNumber];
+    function doSubscribe(observer: Observer<any>, err?: any) {
+      const timeoutTime = timeouts[tryCount];
       if (typeof timeoutTime === 'undefined') {
+        // observer.error(new Error('Reached the end of the schedule and was not successful'));
         observer.complete();
       } else {
-        tryNumber++;
+        tryCount++;
         setTimeout(() => {
           sourceSubscribe(observer);
         }, timeoutTime);
       }
     }
   };
-}
+};
