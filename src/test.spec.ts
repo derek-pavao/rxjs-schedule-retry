@@ -3,7 +3,7 @@ import * as sinonChai from 'sinon-chai';
 import { Observable } from 'rxjs/Observable';
 import { useFakeTimers, spy, SinonFakeTimers } from 'sinon';
 
-import { scheduleRetry } from './schedule-retry';
+import { scheduleRetry } from './';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/let';
 import 'rxjs/add/operator/do';
