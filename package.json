@@ -1,14 +1,15 @@
 {
-  "name": "@dotDeeka/rxjs-schedule-retry",
+  "name": "@dotdeeka/rxjs-schedule-retry",
   "version": "0.2.0",
   "description": "",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "clean": "rimraf ./dist",
     "test": "mocha --require ts-node/register --reporter dot src/**/*.spec.ts",
     "build": "npm run clean && webpack"
   },
-  "author": "",
+  "author": "Derek Pavao <derek@dotdeeka.com>",
   "license": "MIT",
   "peerDependencies": {
     "rxjs": "^5.5.4"

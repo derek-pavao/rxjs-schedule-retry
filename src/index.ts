@@ -1,3 +1,1 @@
-export function scheduleRetry() {
-  console.log('did it work');
-}
+export { scheduleRetry } from './schedule-retry';

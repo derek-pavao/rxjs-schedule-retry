@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { Subscription } from 'rxjs/Subscription';
 
-interface ScheduleRetryFunc {
+export interface ScheduleRetryFunc {
     (...timeouts: number[]): (selector: Observable<any>) => Observable<any>
     (timeouts: number[]): (selector: Observable<any>) => Observable<any>
 }
