@@ -7,12 +7,12 @@
   "scripts": {
     "clean": "rimraf ./dist",
     "test": "mocha --require ts-node/register --reporter dot src/**/*.spec.ts",
-    "build": "npm run clean && webpack"
+    "build": "npm run clean && tsc"
   },
   "author": "Derek Pavao <derek@dotdeeka.com>",
   "license": "MIT",
   "peerDependencies": {
-    "rxjs": "^5.5.4"
+    "rxjs": "^5.1.0"
   },
   "devDependencies": {
     "@types/chai": "^4.0.8",
