@@ -77,13 +77,9 @@ describe('scheduleRetry()', () => {
     const mock$ = mockSubject.asObservable();
 
     mock$.let(scheduleRetry(0, 100))
-      .subscribe(() => {
-        console.log('next');
-      }, (err) => {
-        console.log('err', err);
-
+      .subscribe(null, (err) => {
         expect(err).to.equal(err);
-      }, () => console.log('complete'));
+      });
 
     mockSubject.error(err);
     clock.tick(10);
