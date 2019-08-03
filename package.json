@@ -4,6 +4,10 @@
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "public": true
+  },
   "scripts": {
     "clean": "rimraf ./dist",
     "test": "mocha --require ts-node/register --reporter dot src/**/*.spec.ts",
@@ -12,7 +16,7 @@
   "author": "Derek Pavao <derek@dotdeeka.com>",
   "license": "MIT",
   "peerDependencies": {
-    "rxjs": "^5.1.0"
+    "rxjs": "^6.0.0"
   },
   "devDependencies": {
     "@types/chai": "^4.0.8",
@@ -22,12 +26,12 @@
     "chai": "^4.1.2",
     "mocha": "^4.0.1",
     "rimraf": "^2.6.2",
-    "rxjs": "^5.5.4",
+    "rxjs": "^6.5.2",
     "sinon": "^4.1.2",
     "sinon-chai": "^2.14.0",
     "ts-loader": "^3.2.0",
     "ts-node": "^3.3.0",
-    "typescript": "^2.6.2",
+    "typescript": "^3.1.6",
     "webpack": "^3.10.0",
     "webpack-devserver": "0.0.6"
   }

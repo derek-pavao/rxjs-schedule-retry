@@ -1,12 +1,9 @@
 import { expect, use } from 'chai';
 import * as sinonChai from 'sinon-chai';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { useFakeTimers, spy, SinonFakeTimers } from 'sinon';
-
 import { scheduleRetry } from './';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/let';
-import 'rxjs/add/operator/do';
+import { Subject } from 'rxjs';
 
 use(sinonChai);
 
@@ -30,7 +27,8 @@ describe('scheduleRetry()', () => {
   });
 
   it ('should return a function that returns and instance of an Observable', () => {
-    expect(scheduleRetry(0, 200, 500)(new Observable())).to.be.instanceof(Observable);
+    const obs$ = new Observable();
+    expect(scheduleRetry(0, 200, 500)(obs$)).to.be.instanceof(Observable);
   });
 
   it ('should retry an observable as many times as there are args', () => {
@@ -41,7 +39,7 @@ describe('scheduleRetry()', () => {
     const completeSpy = spy();
 
 
-    mock$.let(scheduleRetry(0, 500))
+    mock$.pipe(scheduleRetry(0, 500))
       .subscribe(nextSpy, errorSpy, completeSpy);
 
     mockSubject.error({});
@@ -61,7 +59,7 @@ describe('scheduleRetry()', () => {
     const mock$ = mockSubject.asObservable();
 
     mock$
-      .let(scheduleRetry(0, 100))
+      .pipe(scheduleRetry(0, 100))
       .subscribe((val) => {
         expect(value).to.equal(val);
         done();
@@ -76,7 +74,7 @@ describe('scheduleRetry()', () => {
     const err = {'err': 'something went wrong. Whoopsies!'};
     const mock$ = mockSubject.asObservable();
 
-    mock$.let(scheduleRetry(0, 100))
+    mock$.pipe(scheduleRetry(0, 100))
       .subscribe(null, (err) => {
         expect(err).to.equal(err);
       });
