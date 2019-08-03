@@ -1,9 +1,7 @@
 # RxJS Schedule Retry [![Build Status](https://travis-ci.org/dotDeeka/rxjs-schedule-retry.svg?branch=master)](https://travis-ci.org/dotDeeka/rxjs-schedule-retry)
 
-RxJS Schedule Retry is in pre 1.0 release, which means its api is not stable and there could be breaking
-changes with any point release.
 
-This is a third party RxJS 5 operator to schedule retries at variable intervals, a "backoff retry".
+This is a third party RxJS 6 operator to schedule retries at variable intervals, a "backoff retry".
 
 Example:
 ```typescript
@@ -12,7 +10,7 @@ import 'rxjs/add/operator/let';
 
 // lets assume someObservable$ is in scope somewhere and it is of type Observable<any>
 someObservable$
-  .let(scheduleRetry(300, 500, 800)
+  .pipe(scheduleRetry(300, 500, 800)
   .subscribe(
     () => console.log('next called'),
     () => console.log('error called'),
